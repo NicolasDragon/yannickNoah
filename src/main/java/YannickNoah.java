@@ -1,4 +1,3 @@
-import tennis.Plays;
 import tennis.Score;
 
 import java.util.Arrays;
@@ -28,27 +27,30 @@ public class YannickNoah {
         }
         //joueur 1 a gagné
         if (plays.get(0)) {
-            if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
-                if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
-                    score.setScorePlayer1(ADVANTAGE_IN);
+            if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
+                if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
+                    score.setScoreInTheCurrentGamePlayer1(ADVANTAGE_IN);
                 } else {
+                    score.setGamesPlayer1(score.getGamesPlayer1()+1);
+                    score.setScoreInTheCurrentGamePlayer1(LOVE);
+                    score.setScoreInTheCurrentGamePlayer2(LOVE);
                     //win !
                 }
             } else {
-                int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScorePlayer1());
+                int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScoreInTheCurrentGamePlayer1());
                 int indexOfNextScore = indexOfCurrentPlayerScore + 1;
-                score.setScorePlayer1(MARKS.get(indexOfNextScore));
+                score.setScoreInTheCurrentGamePlayer1(MARKS.get(indexOfNextScore));
 
             }
         } else {
-            if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
-                if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
-                    score.setScorePlayer2(ADVANTAGE_OUT);
+            if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
+                if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
+                    score.setScoreInTheCurrentGamePlayer2(ADVANTAGE_OUT);
                 }
             } else {
-                int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScorePlayer2());
+                int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScoreInTheCurrentGamePlayer2());
                 int indexOfNextScore = indexOfCurrentPlayerScore + 1;
-                score.setScorePlayer2(MARKS.get(indexOfNextScore));
+                score.setScoreInTheCurrentGamePlayer2(MARKS.get(indexOfNextScore));
 
             }
         }

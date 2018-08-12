@@ -48,21 +48,21 @@ public class YannickNoahTest {
     @DataProvider
     public static Object[][] datas() {
         return new Object[][]{
-                {Collections.emptyList(), "love:love", "game init"},
-                {Arrays.asList(TRUE), "15:love", "first player scores once"},
-                {Arrays.asList(FALSE), "love:15", "second player scores"},
-                {Arrays.asList(FALSE, TRUE), "15A", "two players score once"},
-                {Arrays.asList(TRUE, FALSE), "15A", "two players score once"},
-                {Arrays.asList(TRUE, TRUE), "30:love", "first player scores twice"},
-                {Arrays.asList(FALSE, FALSE), "love:30", "second player scores twice"},
-                {Arrays.asList(FALSE, FALSE,FALSE), "love:40", "second player scores three times"},
-                {Arrays.asList(TRUE, TRUE,TRUE), "40:love", "first player scores three times"},
-                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE), "advantage out", "second player has advantage"},
-                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE), "advantage in", "first player has advantage"},
-                {Arrays.asList(FALSE, FALSE, TRUE, TRUE), "30A", ""},
-                {Arrays.asList(FALSE, FALSE,FALSE,TRUE, TRUE, TRUE), "40A", ""},
-                {Arrays.asList(FALSE, FALSE,TRUE, TRUE, TRUE), "40:30", ""},
-//                {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
+                {Collections.emptyList(), "0|0 love:love", "game init"},
+                {Arrays.asList(TRUE), "0|0 15:love", "first player scores once"},
+                {Arrays.asList(FALSE), "0|0 love:15", "second player scores"},
+                {Arrays.asList(FALSE, TRUE), "0|0 15A", "two players score once"},
+                {Arrays.asList(TRUE, FALSE), "0|0 15A", "two players score once"},
+                {Arrays.asList(TRUE, TRUE), "0|0 30:love", "first player scores twice"},
+                {Arrays.asList(FALSE, FALSE), "0|0 love:30", "second player scores twice"},
+                {Arrays.asList(FALSE, FALSE,FALSE), "0|0 love:40", "second player scores three times"},
+                {Arrays.asList(TRUE, TRUE,TRUE), "0|0 40:love", "first player scores three times"},
+                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE), "0|0 advantage out", "second player has advantage"},
+                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE), "0|0 advantage in", "first player has advantage"},
+                {Arrays.asList(FALSE, FALSE, TRUE, TRUE), "0|0 30A", ""},
+                {Arrays.asList(FALSE, FALSE,FALSE,TRUE, TRUE, TRUE), "0|0 40A", ""},
+                {Arrays.asList(FALSE, FALSE,TRUE, TRUE, TRUE), "0|0 40:30", ""},
+                {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
         };
     }
 }
