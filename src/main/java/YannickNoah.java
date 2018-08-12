@@ -35,7 +35,9 @@ public class YannickNoah {
                     //win !
                 }
             } else {
-                score.setScorePlayer1(MARKS.get(MARKS.indexOf(score.getScorePlayer1()) + 1));
+                int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScorePlayer1());
+                int indexOfNextScore = indexOfCurrentPlayerScore + 1;
+                score.setScorePlayer1(MARKS.get(indexOfNextScore));
 
             }
         } else {
@@ -44,7 +46,9 @@ public class YannickNoah {
                     score.setScorePlayer2(ADVANTAGE_OUT);
                 }
             } else {
-                score.setScorePlayer2(MARKS.get(MARKS.indexOf(score.getScorePlayer2()) + 1));
+                int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScorePlayer2());
+                int indexOfNextScore = indexOfCurrentPlayerScore + 1;
+                score.setScorePlayer2(MARKS.get(indexOfNextScore));
 
             }
         }
