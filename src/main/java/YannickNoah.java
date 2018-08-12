@@ -28,31 +28,24 @@ public class YannickNoah {
         }
         //joueur 1 a gagné
         if (plays.get(0)) {
-            if (score.getScorePlayer1().equalsIgnoreCase(LOVE)) {
-                score.setScorePlayer1(FIFTEEN);
-            } else if (score.getScorePlayer1().equalsIgnoreCase(FIFTEEN)) {
-                score.setScorePlayer1(THIRTY);
-            } else if (score.getScorePlayer1().equalsIgnoreCase(THIRTY)) {
-                score.setScorePlayer1(FOURTY);
-            } else if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
+            if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
                 if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
                     score.setScorePlayer1(ADVANTAGE_IN);
                 } else {
                     //win !
                 }
+            } else {
+                score.setScorePlayer1(MARKS.get(MARKS.indexOf(score.getScorePlayer1()) + 1));
 
             }
         } else {
-            if (score.getScorePlayer2().equalsIgnoreCase(LOVE)) {
-                score.setScorePlayer2(FIFTEEN);
-            } else if (score.getScorePlayer2().equalsIgnoreCase(FIFTEEN)) {
-                score.setScorePlayer2(THIRTY);
-            } else if (score.getScorePlayer2().equalsIgnoreCase(THIRTY)) {
-                score.setScorePlayer2(FOURTY);
-            } else if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
+            if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
                 if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
                     score.setScorePlayer2(ADVANTAGE_OUT);
                 }
+            } else {
+                score.setScorePlayer2(MARKS.get(MARKS.indexOf(score.getScorePlayer2()) + 1));
+
             }
         }
         plays.remove(0);
