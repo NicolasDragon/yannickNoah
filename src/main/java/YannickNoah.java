@@ -1,4 +1,5 @@
 import tennis.Plays;
+import tennis.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,23 +17,46 @@ public class YannickNoah {
     private static final String ADVANTAGE_OUT = "advantage out";
 
 
-    public String computeScore(Plays plays) {
-        int firstPlayerScore = (int) plays.getPlays().stream().filter(x -> x).count();
-        int secondPlayerScore = plays.getPlays().size() - firstPlayerScore;
-        if (isStartOfTheGame(plays.getPlays())) {
-            return constructInitScore();
-        }
-        if (plays.getPlays().size() > 6) {
-            int diffScores = firstPlayerScore - secondPlayerScore;
-            if ((diffScores == 1)) {
-                return ADVANTAGE_IN;
-            }
-            else if (diffScores == -1) {
-                return ADVANTAGE_OUT;
-            }
-        }
+    public String computeScore(List<Boolean> plays) {
+        return compteScoreRecursive(plays, new Score(LOVE, LOVE));
+    }
 
-        return constructScoreFormat(MARKS.get(firstPlayerScore), MARKS.get(secondPlayerScore));
+
+    public String compteScoreRecursive(List<Boolean> plays, Score score) {
+        if (plays.size() == 0) {
+            return score.toString();
+        }
+        //joueur 1 a gagné
+        if (plays.get(0)) {
+            if (score.getScorePlayer1().equalsIgnoreCase(LOVE)) {
+                score.setScorePlayer1(FIFTEEN);
+            } else if (score.getScorePlayer1().equalsIgnoreCase(FIFTEEN)) {
+                score.setScorePlayer1(THIRTY);
+            } else if (score.getScorePlayer1().equalsIgnoreCase(THIRTY)) {
+                score.setScorePlayer1(FOURTY);
+            } else if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
+                if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
+                    score.setScorePlayer1(ADVANTAGE_IN);
+                } else {
+                    //win !
+                }
+
+            }
+        } else {
+            if (score.getScorePlayer2().equalsIgnoreCase(LOVE)) {
+                score.setScorePlayer2(FIFTEEN);
+            } else if (score.getScorePlayer2().equalsIgnoreCase(FIFTEEN)) {
+                score.setScorePlayer2(THIRTY);
+            } else if (score.getScorePlayer2().equalsIgnoreCase(THIRTY)) {
+                score.setScorePlayer2(FOURTY);
+            } else if (score.getScorePlayer2().equalsIgnoreCase(FOURTY)) {
+                if (score.getScorePlayer1().equalsIgnoreCase(FOURTY)) {
+                    score.setScorePlayer2(ADVANTAGE_OUT);
+                }
+            }
+        }
+        plays.remove(0);
+        return compteScoreRecursive(plays, score);
     }
 
     private String constructInitScore() {

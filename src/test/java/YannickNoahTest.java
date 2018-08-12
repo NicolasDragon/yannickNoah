@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import tennis.Plays;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,7 @@ public class YannickNoahTest {
                                  String expectedScore,
                                String scenarioName) {
         //WHEN
-        String result = yannickNoah.computeScore(new Plays(plays));
+        String result = yannickNoah.computeScore(new ArrayList<>(plays));
 
         //THEN
         Assert.assertEquals(scenarioName, expectedScore, result);
@@ -61,7 +62,7 @@ public class YannickNoahTest {
                 {Arrays.asList(FALSE, FALSE, TRUE, TRUE), "30A", ""},
                 {Arrays.asList(FALSE, FALSE,FALSE,TRUE, TRUE, TRUE), "40A", ""},
                 {Arrays.asList(FALSE, FALSE,TRUE, TRUE, TRUE), "40:30", ""},
-                {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
+//                {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
         };
     }
 }
