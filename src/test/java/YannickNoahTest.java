@@ -63,6 +63,7 @@ public class YannickNoahTest {
                 {Arrays.asList(FALSE, FALSE,FALSE,TRUE, TRUE, TRUE), "0|0 40A", ""},
                 {Arrays.asList(FALSE, FALSE,TRUE, TRUE, TRUE), "0|0 40:30", ""},
                 {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
+                {Arrays.asList( TRUE, TRUE,TRUE, TRUE,TRUE), "1|0 15:love", ""},
         };
     }
 }
