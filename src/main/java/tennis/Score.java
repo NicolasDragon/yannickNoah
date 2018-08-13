@@ -1,61 +1,104 @@
 package tennis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Score {
 
+    private final ScoreInGame scoreInCurrentGame = new ScoreInGame();
+
+    public List<FinishedSet> getFinishedSets() {
+        return finishedSets;
+    }
+
+    private List<FinishedSet> finishedSets = new ArrayList();
+    private int gamesInCurrentSetPlayer2;
+    private int gamesInCurrentSetPlayer1;
+
+
+    public Score() {
+        initScore();
+    }
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
-        this.scoreInTheCurrentGamePlayer1 = scoreInTheCurrentGamePlayer1;
+        scoreInCurrentGame.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
     }
 
     public void setScoreInTheCurrentGamePlayer2(String scoreInTheCurrentGamePlayer2) {
-        this.scoreInTheCurrentGamePlayer2 = scoreInTheCurrentGamePlayer2;
+        scoreInCurrentGame.setScoreInTheCurrentGamePlayer2(scoreInTheCurrentGamePlayer2);
     }
 
-    private int gamesPlayer1;
 
-    public int getGamesPlayer1() {
-        return gamesPlayer1;
+    public int getGamesInCurrentSetPlayer1() {
+        return gamesInCurrentSetPlayer1;
     }
 
-    public void setGamesPlayer1(int gamesPlayer1) {
-        this.gamesPlayer1 = gamesPlayer1;
+    public void setGamesInCurrentSetPlayer1(int gamesInCurrentSetPlayer1) {
+        this.gamesInCurrentSetPlayer1 = gamesInCurrentSetPlayer1;
     }
 
-    public int getGamesPlayer2() {
-        return gamesPlayer2;
+    public int getGamesInCurrentSetPlayer2() {
+        return gamesInCurrentSetPlayer2;
     }
 
-    public void setGamesPlayer2(int gamesPlayer2) {
-        this.gamesPlayer2 = gamesPlayer2;
+    public void setGamesInCurrentSetPlayer2(int gamesInCurrentSetPlayer2) {
+        this.gamesInCurrentSetPlayer2 = gamesInCurrentSetPlayer2;
     }
 
-    private int gamesPlayer2;
 
-    private String scoreInTheCurrentGamePlayer1;
-    private String scoreInTheCurrentGamePlayer2;
 
-    public Score(String scoreInTheCurrentGamePlayer1, String scoreInTheCurrentGamePlayer2) {
-        this.scoreInTheCurrentGamePlayer1 = scoreInTheCurrentGamePlayer1;
-        this.scoreInTheCurrentGamePlayer2 = scoreInTheCurrentGamePlayer2;
+    private void initScore() {
+        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer1("love");
+        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer2("love");
     }
 
     public String getScoreInTheCurrentGamePlayer1() {
-        return scoreInTheCurrentGamePlayer1;
+        return scoreInCurrentGame.getScoreInTheCurrentGamePlayer1();
     }
 
     public String getScoreInTheCurrentGamePlayer2() {
-        return scoreInTheCurrentGamePlayer2;
+        return scoreInCurrentGame.getScoreInTheCurrentGamePlayer2();
+    }
+
+    public void player2wonTheGame() {
+        setGamesInCurrentSetPlayer2(getGamesInCurrentSetPlayer2() + 1);
+//        if (getGamesInCurrentSetPlayer2() == 5 && getGamesInCurrentSetPlayer1() < 5) {
+//            getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
+//        }
+        initScore();
+    }
+
+    public void player1wonTheGame() {
+        setGamesInCurrentSetPlayer1(getGamesInCurrentSetPlayer1() + 1);
+        initScore();
     }
 
     @Override
     public String toString() {
-        if (!scoreInTheCurrentGamePlayer1.equalsIgnoreCase("love") && scoreInTheCurrentGamePlayer1.equalsIgnoreCase(scoreInTheCurrentGamePlayer2)) {
-            return gamesPlayer1 + "|" + gamesPlayer2 +" "+ scoreInTheCurrentGamePlayer1 + "A";
+        StringBuilder resultat = new StringBuilder();
+        addPreviousSetsResults(resultat);
+        if (!scoreInCurrentGame.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase("love")
+                && scoreInCurrentGame.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(scoreInCurrentGame.getScoreInTheCurrentGamePlayer2())) {
+            resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer1() + "A");
+            return resultat.toString();
         }
-        if (scoreInTheCurrentGamePlayer1.equalsIgnoreCase("advantage in")) {
-            return gamesPlayer1 + "|" + gamesPlayer2 +" "+ scoreInTheCurrentGamePlayer1;
-        } else if (scoreInTheCurrentGamePlayer2.equalsIgnoreCase("advantage out")) {
-            return gamesPlayer1 + "|" + gamesPlayer2 +" "+ scoreInTheCurrentGamePlayer2;
+        if (scoreInCurrentGame.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase("advantage in")) {
+            resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer1());
+            return resultat.toString();
+        } else if (scoreInCurrentGame.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase("advantage out")) {
+            resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer2());
+            return resultat.toString();
         }
-        return gamesPlayer1 + "|" + gamesPlayer2 +" "+ scoreInTheCurrentGamePlayer1 + ":" + scoreInTheCurrentGamePlayer2;
+        if (finishedSets.stream().filter(x -> x.getGameInSetPlayer2() - x.getGamePlayer1() >= 1 && x.getGameInSetPlayer2() >= 6).count() == 3) {
+            return resultat.append("player 2 won").toString();
+        } else if (finishedSets.stream().filter(x -> x.getGamePlayer1() - x.getGameInSetPlayer2() >= 1 && x.getGamePlayer1() >= 6).count() == 3) {
+            return resultat.append("player 1 won").toString();
+        }
+        return resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer1() + ":" + scoreInCurrentGame.getScoreInTheCurrentGamePlayer2()).toString();
+    }
+
+    private void addPreviousSetsResults(StringBuilder resultat) {
+        for (FinishedSet finishedSet : finishedSets) {
+            resultat.append(finishedSet.getGamePlayer1() + "|" + finishedSet.getGameInSetPlayer2() + " ");
+        }
     }
 }

@@ -1,3 +1,4 @@
+import tennis.FinishedSet;
 import tennis.Score;
 
 import java.util.Arrays;
@@ -17,11 +18,11 @@ public class YannickNoah {
 
 
     public String computeScore(List<Boolean> plays) {
-        return compteScoreRecursive(plays, new Score(LOVE, LOVE));
+        return compteScoreRecursive(plays, new Score());
     }
 
 
-    public String compteScoreRecursive(List<Boolean> plays, Score score) {
+    private String compteScoreRecursive(List<Boolean> plays, Score score) {
         if (plays.size() == 0) {
             return score.toString();
         }
@@ -36,9 +37,21 @@ public class YannickNoah {
     }
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
-        if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
+        if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(ADVANTAGE_OUT)) {
+            score.player2wonTheGame();
+        } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
             if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
                 score.setScoreInTheCurrentGamePlayer2(ADVANTAGE_OUT);
+            } else {
+                //win of the set !
+                if (score.getGamesInCurrentSetPlayer2() == 5 && score.getGamesInCurrentSetPlayer1() < 5) {
+                    score.player2wonTheGame();
+                    score.getFinishedSets().add(new FinishedSet(score.getGamesInCurrentSetPlayer2(), score.getGamesInCurrentSetPlayer1()));
+                    clearGamesInCurrentSet(score);
+                } else {
+                    //win of the game !
+                    score.player2wonTheGame();
+                }
             }
         } else {
             int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScoreInTheCurrentGamePlayer2());
@@ -49,14 +62,22 @@ public class YannickNoah {
     }
 
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {
-        if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
+        if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ADVANTAGE_IN)) {
+            score.player1wonTheGame();
+        } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
             if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
                 score.setScoreInTheCurrentGamePlayer1(ADVANTAGE_IN);
             } else {
-                //win of the game !
-                score.setGamesPlayer1(score.getGamesPlayer1() + 1);
-                score.setScoreInTheCurrentGamePlayer1(LOVE);
-                score.setScoreInTheCurrentGamePlayer2(LOVE);
+                //win of the set !
+                if (score.getGamesInCurrentSetPlayer1() == 5 && score.getGamesInCurrentSetPlayer2() < 5) {
+                    score.player1wonTheGame();
+                    score.getFinishedSets().add(new FinishedSet(score.getGamesInCurrentSetPlayer2(), score.getGamesInCurrentSetPlayer1()));
+
+                    clearGamesInCurrentSet(score);
+                } else {
+                    //win of the game !
+                    score.player1wonTheGame();
+                }
             }
         } else {
             int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScoreInTheCurrentGamePlayer1());
@@ -65,6 +86,12 @@ public class YannickNoah {
 
         }
     }
+
+    private void clearGamesInCurrentSet(Score score) {
+        score.setGamesInCurrentSetPlayer1(0);
+        score.setGamesInCurrentSetPlayer2(0);
+    }
+
 
     private String constructInitScore() {
         return LOVE + SCORE_SEPARATOR + LOVE;

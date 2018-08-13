@@ -5,12 +5,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import tennis.Plays;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.Boolean.*;
 
@@ -18,6 +19,7 @@ import static java.lang.Boolean.*;
 public class YannickNoahTest {
 
 
+    public static final Boolean[] FIRST_PLAYER_GAME = {TRUE, TRUE, TRUE, TRUE};
     private YannickNoah yannickNoah;
 
     @Before
@@ -64,7 +66,22 @@ public class YannickNoahTest {
                 {Arrays.asList(FALSE, FALSE,TRUE, TRUE, TRUE), "0|0 40:30", ""},
                 {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
                 {Arrays.asList( TRUE, TRUE,TRUE, TRUE,TRUE), "1|0 15:love", ""},
+                {Arrays.asList( TRUE, TRUE,TRUE, TRUE,TRUE,TRUE, TRUE,TRUE), "2|0 love:love", "2 games to zero"},
+                {Arrays.asList( FALSE, FALSE,FALSE, FALSE,FALSE,FALSE, FALSE,FALSE), "0|2 love:love", "2 games to zero"},
+                {Arrays.asList( TRUE, TRUE,FALSE, TRUE,TRUE,TRUE,TRUE, TRUE,TRUE), "2|0 love:love", "2 games to zero"},
+                {createPlays(TRUE, 16), "4|0 love:love", "2 games to zero"},
+                {createPlays(TRUE, 28), "6|0 1|0 love:love", "2 games to zero"},
+                {createPlays(TRUE, 72), "6|0 6|0 6|0 player 1 won", "2 games to zero"},
+                {createPlays(FALSE, 28), "0|6 0|1 love:love", "1 set and 1 games to zero"},
+                {createPlays(FALSE, 48), "0|6 0|6 0|0 love:love", "2  sets to zero"},
+                {createPlays(FALSE, 72), "0|6 0|6 0|6 player 2 won", "2 games to zero"},
+                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,FALSE), "0|1 love:love", "second player has advantage"},
+                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE,TRUE), "1|0 love:love", "second player has advantage"},
         };
+    }
+
+    private static List<Boolean> createPlays(Boolean value, int number) {
+        return Stream.generate(()-> value).limit(number).collect(Collectors.toList());
     }
 }
 
