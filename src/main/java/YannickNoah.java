@@ -93,22 +93,4 @@ public class YannickNoah {
     }
 
 
-    private String constructInitScore() {
-        return LOVE + SCORE_SEPARATOR + LOVE;
-    }
-
-    private boolean isStartOfTheGame(List<Boolean> plays) {
-        return plays.size() == 0;
-    }
-
-    private String constructScoreFormat(String firstPlayerScore, String secondPlayerScore) {
-        if (firstPlayerScore.equalsIgnoreCase(secondPlayerScore) && !firstPlayerScore.equalsIgnoreCase(LOVE)) {
-            return constructSameScoreFormat(firstPlayerScore);
-        }
-        return firstPlayerScore + SCORE_SEPARATOR + secondPlayerScore;
-    }
-
-    private String constructSameScoreFormat(String firstPlayerScore) {
-        return firstPlayerScore + "A";
-    }
 }
