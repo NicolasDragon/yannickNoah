@@ -72,7 +72,7 @@ public class YannickNoahTest {
                 {createPlays(FALSE, 72), "0|6 0|6 0|6 player 2 won", "2 games to zero"},
                 {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE), "0|1 love:love", "second player has advantage"},
                 {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE), "1|0 love:love", "second player has advantage"},
-//                {createTieBreak(), "7|6 1|0 love:love", "first player won the first set"},
+                {createTieBreak(), "7|6 0|0 love:love", "first player won the first set"},
 //                {createTieBreak(), "6|6  1:love", "first player won the first set"},
         };
     }
@@ -88,8 +88,9 @@ public class YannickNoahTest {
         plays.addAll(createPlays(FALSE, 4));
         //7-6
         //facon différente de compter le score ici!
-        plays.addAll(createPlays(TRUE, 4));
-        plays.addAll(createPlays(TRUE, 4));
+        //premier à 7 avec 2 points d'écart
+        plays.addAll(createPlays(TRUE, 7));
+//        plays.addAll(createPlays(TRUE, 4));
         return plays;
     }
 

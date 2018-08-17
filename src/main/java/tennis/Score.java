@@ -61,21 +61,20 @@ public class Score {
 
     public void player2wonTheGame() {
         setGamesInCurrentSetPlayer2(getGamesInCurrentSetPlayer2() + 1);
-//        clearGamesInCurrentSet(score);
-        if (getGamesInCurrentSetPlayer2() == 6 && getGamesInCurrentSetPlayer1() < 6) {
+        if (getGamesInCurrentSetPlayer2() >= 6 && getGamesInCurrentSetPlayer2() - getGamesInCurrentSetPlayer1() >= 2) {
             getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
-        setGamesInCurrentSetPlayer1(0);
-        setGamesInCurrentSetPlayer2(0);
+            setGamesInCurrentSetPlayer1(0);
+            setGamesInCurrentSetPlayer2(0);
         }
         initScore();
     }
 
     public void player1wonTheGame() {
         setGamesInCurrentSetPlayer1(getGamesInCurrentSetPlayer1() + 1);
-        if (getGamesInCurrentSetPlayer1() == 6 && getGamesInCurrentSetPlayer2() < 6) {
+        if (getGamesInCurrentSetPlayer1() >= 6 && getGamesInCurrentSetPlayer1() - getGamesInCurrentSetPlayer2() >= 2||(getGamesInCurrentSetPlayer1() > 6)) {
             getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
-        setGamesInCurrentSetPlayer1(0);
-        setGamesInCurrentSetPlayer2(0);
+            setGamesInCurrentSetPlayer1(0);
+            setGamesInCurrentSetPlayer2(0);
         }
         initScore();
     }

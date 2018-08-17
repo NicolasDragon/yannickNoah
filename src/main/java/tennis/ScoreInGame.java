@@ -2,8 +2,8 @@ package tennis;
 
 public class ScoreInGame {
 
-    String scoreInTheCurrentGamePlayer1;
-    String scoreInTheCurrentGamePlayer2;
+    private String scoreInTheCurrentGamePlayer1;
+    private String scoreInTheCurrentGamePlayer2;
 
     public ScoreInGame() {
     }

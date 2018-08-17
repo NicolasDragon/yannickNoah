@@ -60,20 +60,35 @@ public class YannickNoah {
     }
 
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {
-        // il peut gagner le game et le set
-        if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ADVANTAGE_IN)) {
-            score.player1wonTheGame();
-        } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
-            if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
-                score.setScoreInTheCurrentGamePlayer1(ADVANTAGE_IN);
+        if (score.getGamesInCurrentSetPlayer1() == 6 && score.getGamesInCurrentSetPlayer2() == 6) {
+            if (score.getScoreInTheCurrentGamePlayer1().equals(LOVE)) {
+                score.setScoreInTheCurrentGamePlayer1("1");
             } else {
-                //win of the set !
-                score.player1wonTheGame();
+                if (Integer.valueOf(score.getScoreInTheCurrentGamePlayer1()) >= 6
+                        ) {
+                    score.player1wonTheGame();
+                }else{
+                score.setScoreInTheCurrentGamePlayer1(String.valueOf(Integer.valueOf(score.getScoreInTheCurrentGamePlayer1()) + 1));
+
+                }
             }
         } else {
-            String scoreInTheCurrentGamePlayer1 = getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer1());
-            score.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
 
+            // il peut gagner le game et le set
+            if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ADVANTAGE_IN)) {
+                score.player1wonTheGame();
+            } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
+                if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
+                    score.setScoreInTheCurrentGamePlayer1(ADVANTAGE_IN);
+                } else {
+                    //win of the set !
+                    score.player1wonTheGame();
+                }
+            } else {
+                String scoreInTheCurrentGamePlayer1 = getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer1());
+                score.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
+
+            }
         }
     }
 
