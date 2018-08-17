@@ -28,12 +28,11 @@ public class YannickNoahTest {
     }
 
 
-
     @Test
     @UseDataProvider(("datas"))
     public void compteScoreTest(List<Boolean> plays,
-                                 String expectedScore,
-                               String scenarioName) {
+                                String expectedScore,
+                                String scenarioName) {
         //WHEN
         String result = yannickNoah.computeScore(new ArrayList<>(plays));
 
@@ -41,10 +40,6 @@ public class YannickNoahTest {
         Assert.assertEquals(scenarioName, expectedScore, result);
 
     }
-
-
-
-
 
 
     @DataProvider
@@ -57,31 +52,49 @@ public class YannickNoahTest {
                 {Arrays.asList(TRUE, FALSE), "0|0 15A", "two players score once"},
                 {Arrays.asList(TRUE, TRUE), "0|0 30:love", "first player scores twice"},
                 {Arrays.asList(FALSE, FALSE), "0|0 love:30", "second player scores twice"},
-                {Arrays.asList(FALSE, FALSE,FALSE), "0|0 love:40", "second player scores three times"},
-                {Arrays.asList(TRUE, TRUE,TRUE), "0|0 40:love", "first player scores three times"},
+                {Arrays.asList(FALSE, FALSE, FALSE), "0|0 love:40", "second player scores three times"},
+                {Arrays.asList(TRUE, TRUE, TRUE), "0|0 40:love", "first player scores three times"},
                 {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE), "0|0 advantage out", "second player has advantage"},
                 {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE), "0|0 advantage in", "first player has advantage"},
                 {Arrays.asList(FALSE, FALSE, TRUE, TRUE), "0|0 30A", ""},
-                {Arrays.asList(FALSE, FALSE,FALSE,TRUE, TRUE, TRUE), "0|0 40A", ""},
-                {Arrays.asList(FALSE, FALSE,TRUE, TRUE, TRUE), "0|0 40:30", ""},
-                {Arrays.asList( TRUE, TRUE,TRUE, TRUE), "1|0 love:love", ""},
-                {Arrays.asList( TRUE, TRUE,TRUE, TRUE,TRUE), "1|0 15:love", ""},
-                {Arrays.asList( TRUE, TRUE,TRUE, TRUE,TRUE,TRUE, TRUE,TRUE), "2|0 love:love", "2 games to zero"},
-                {Arrays.asList( FALSE, FALSE,FALSE, FALSE,FALSE,FALSE, FALSE,FALSE), "0|2 love:love", "2 games to zero"},
-                {Arrays.asList( TRUE, TRUE,FALSE, TRUE,TRUE,TRUE,TRUE, TRUE,TRUE), "2|0 love:love", "2 games to zero"},
+                {Arrays.asList(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE), "0|0 40A", ""},
+                {Arrays.asList(FALSE, FALSE, TRUE, TRUE, TRUE), "0|0 40:30", ""},
+                {Arrays.asList(TRUE, TRUE, TRUE, TRUE), "1|0 love:love", ""},
+                {Arrays.asList(TRUE, TRUE, TRUE, TRUE, TRUE), "1|0 15:love", ""},
+                {Arrays.asList(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE), "2|0 love:love", "2 games to zero"},
+                {Arrays.asList(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE), "0|2 love:love", "2 games to zero"},
+                {Arrays.asList(TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE), "2|0 love:love", "2 games to zero"},
                 {createPlays(TRUE, 16), "4|0 love:love", "2 games to zero"},
                 {createPlays(TRUE, 28), "6|0 1|0 love:love", "2 games to zero"},
                 {createPlays(TRUE, 72), "6|0 6|0 6|0 player 1 won", "2 games to zero"},
                 {createPlays(FALSE, 28), "0|6 0|1 love:love", "1 set and 1 games to zero"},
                 {createPlays(FALSE, 48), "0|6 0|6 0|0 love:love", "2  sets to zero"},
                 {createPlays(FALSE, 72), "0|6 0|6 0|6 player 2 won", "2 games to zero"},
-                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE,FALSE), "0|1 love:love", "second player has advantage"},
-                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE,TRUE), "1|0 love:love", "second player has advantage"},
+                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE), "0|1 love:love", "second player has advantage"},
+                {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE), "1|0 love:love", "second player has advantage"},
+//                {createTieBreak(), "7|6 1|0 love:love", "first player won the first set"},
+//                {createTieBreak(), "6|6  1:love", "first player won the first set"},
         };
     }
 
+    public static List createTieBreak() {
+        // 5-0
+        List<Boolean> plays = createPlays(TRUE, 20);
+        // 5-5
+        plays.addAll(createPlays(FALSE, 20));
+        //6-5
+        plays.addAll(createPlays(TRUE, 4));
+        //6-6
+        plays.addAll(createPlays(FALSE, 4));
+        //7-6
+        //facon différente de compter le score ici!
+        plays.addAll(createPlays(TRUE, 4));
+        plays.addAll(createPlays(TRUE, 4));
+        return plays;
+    }
+
     private static List<Boolean> createPlays(Boolean value, int number) {
-        return Stream.generate(()-> value).limit(number).collect(Collectors.toList());
+        return Stream.generate(() -> value).limit(number).collect(Collectors.toList());
     }
 }
 

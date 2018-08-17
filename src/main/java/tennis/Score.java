@@ -19,6 +19,7 @@ public class Score {
     public Score() {
         initScore();
     }
+
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
         scoreInCurrentGame.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
     }
@@ -45,7 +46,6 @@ public class Score {
     }
 
 
-
     private void initScore() {
         this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer1("love");
         this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer2("love");
@@ -61,14 +61,22 @@ public class Score {
 
     public void player2wonTheGame() {
         setGamesInCurrentSetPlayer2(getGamesInCurrentSetPlayer2() + 1);
-//        if (getGamesInCurrentSetPlayer2() == 5 && getGamesInCurrentSetPlayer1() < 5) {
-//            getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
-//        }
+//        clearGamesInCurrentSet(score);
+        if (getGamesInCurrentSetPlayer2() == 6 && getGamesInCurrentSetPlayer1() < 6) {
+            getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
+        setGamesInCurrentSetPlayer1(0);
+        setGamesInCurrentSetPlayer2(0);
+        }
         initScore();
     }
 
     public void player1wonTheGame() {
         setGamesInCurrentSetPlayer1(getGamesInCurrentSetPlayer1() + 1);
+        if (getGamesInCurrentSetPlayer1() == 6 && getGamesInCurrentSetPlayer2() < 6) {
+            getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
+        setGamesInCurrentSetPlayer1(0);
+        setGamesInCurrentSetPlayer2(0);
+        }
         initScore();
     }
 

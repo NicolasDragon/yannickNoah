@@ -1,4 +1,3 @@
-import tennis.FinishedSet;
 import tennis.Score;
 
 import java.util.Arrays;
@@ -37,31 +36,31 @@ public class YannickNoah {
     }
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
+        //cas de l'avantage
         if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(ADVANTAGE_OUT)) {
             score.player2wonTheGame();
+            //cas du 40A
         } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
             if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
                 score.setScoreInTheCurrentGamePlayer2(ADVANTAGE_OUT);
             } else {
-                //win of the set !
-                if (score.getGamesInCurrentSetPlayer2() == 5 && score.getGamesInCurrentSetPlayer1() < 5) {
-                    score.player2wonTheGame();
-                    score.getFinishedSets().add(new FinishedSet(score.getGamesInCurrentSetPlayer2(), score.getGamesInCurrentSetPlayer1()));
-                    clearGamesInCurrentSet(score);
-                } else {
-                    //win of the game !
-                    score.player2wonTheGame();
-                }
+                score.player2wonTheGame();
             }
         } else {
-            int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScoreInTheCurrentGamePlayer2());
-            int indexOfNextScore = indexOfCurrentPlayerScore + 1;
-            score.setScoreInTheCurrentGamePlayer2(MARKS.get(indexOfNextScore));
+            String scoreInTheCurrentGamePlayer2 = getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer2());
+            score.setScoreInTheCurrentGamePlayer2(scoreInTheCurrentGamePlayer2);
 
         }
     }
 
+    private String getNewScoreAfterPlayWon(String scoreInTheCurrentGamePlayer2) {
+        int indexOfCurrentPlayerScore = MARKS.indexOf(scoreInTheCurrentGamePlayer2);
+        int indexOfNextScore = indexOfCurrentPlayerScore + 1;
+        return MARKS.get(indexOfNextScore);
+    }
+
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {
+        // il peut gagner le game et le set
         if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ADVANTAGE_IN)) {
             score.player1wonTheGame();
         } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
@@ -69,27 +68,13 @@ public class YannickNoah {
                 score.setScoreInTheCurrentGamePlayer1(ADVANTAGE_IN);
             } else {
                 //win of the set !
-                if (score.getGamesInCurrentSetPlayer1() == 5 && score.getGamesInCurrentSetPlayer2() < 5) {
-                    score.player1wonTheGame();
-                    score.getFinishedSets().add(new FinishedSet(score.getGamesInCurrentSetPlayer2(), score.getGamesInCurrentSetPlayer1()));
-
-                    clearGamesInCurrentSet(score);
-                } else {
-                    //win of the game !
-                    score.player1wonTheGame();
-                }
+                score.player1wonTheGame();
             }
         } else {
-            int indexOfCurrentPlayerScore = MARKS.indexOf(score.getScoreInTheCurrentGamePlayer1());
-            int indexOfNextScore = indexOfCurrentPlayerScore + 1;
-            score.setScoreInTheCurrentGamePlayer1(MARKS.get(indexOfNextScore));
+            String scoreInTheCurrentGamePlayer1 = getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer1());
+            score.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
 
         }
-    }
-
-    private void clearGamesInCurrentSet(Score score) {
-        score.setGamesInCurrentSetPlayer1(0);
-        score.setGamesInCurrentSetPlayer2(0);
     }
 
 
