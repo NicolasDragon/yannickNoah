@@ -1,3 +1,5 @@
+package tennis;
+
 import tennis.Score;
 
 import java.util.Arrays;

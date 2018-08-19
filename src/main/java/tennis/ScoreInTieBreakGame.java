@@ -1,4 +1,4 @@
-import tennis.Score;
+package tennis;
 
 public class ScoreInTieBreakGame {
 

@@ -1,6 +1,5 @@
-import tennis.Score;
+package tennis;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class YannickNoah {

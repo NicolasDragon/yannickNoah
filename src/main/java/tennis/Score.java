@@ -6,6 +6,7 @@ import java.util.List;
 public class Score {
 
     private final ScoreInGame scoreInCurrentGame = new ScoreInGame();
+    private final ScoreFormater scoreFormater = new ScoreFormater();
 
     public List<FinishedSet> getFinishedSets() {
         return finishedSets;
@@ -61,51 +62,52 @@ public class Score {
 
     public void player2wonTheGame() {
         setGamesInCurrentSetPlayer2(getGamesInCurrentSetPlayer2() + 1);
-        if (getGamesInCurrentSetPlayer2() >= 6 && getGamesInCurrentSetPlayer2() - getGamesInCurrentSetPlayer1() >= 2||(getGamesInCurrentSetPlayer2() > 6)) {
-            getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
-            setGamesInCurrentSetPlayer1(0);
-            setGamesInCurrentSetPlayer2(0);
+        if (hasPlayer2WonTheSet()) {
+            setCurrentSetFinished();
+            startNewSet();
         }
         initScore();
+    }
+
+    private void startNewSet() {
+        setGamesInCurrentSetPlayer1(0);
+        setGamesInCurrentSetPlayer2(0);
+    }
+
+    private void setCurrentSetFinished() {
+        getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
+    }
+
+    private boolean hasPlayer2WonTheSet() {
+        return hasPlayer2EnoughGamesToWinTheSet() || hasPlayer2WonTheSetOnTieBreak();
+    }
+
+    private boolean hasPlayer2WonTheSetOnTieBreak() {
+        return getGamesInCurrentSetPlayer2() > 6;
+    }
+
+    private boolean hasPlayer2EnoughGamesToWinTheSet() {
+        return getGamesInCurrentSetPlayer2() >= 6 && getGamesInCurrentSetPlayer2() - getGamesInCurrentSetPlayer1() >= 2;
     }
 
     public void player1wonTheGame() {
         setGamesInCurrentSetPlayer1(getGamesInCurrentSetPlayer1() + 1);
-        if (getGamesInCurrentSetPlayer1() >= 6 && getGamesInCurrentSetPlayer1() - getGamesInCurrentSetPlayer2() >= 2||(getGamesInCurrentSetPlayer1() > 6)) {
-            getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
-            setGamesInCurrentSetPlayer1(0);
-            setGamesInCurrentSetPlayer2(0);
+        if (hasPlayer1WonTheSet()) {
+            setCurrentSetFinished();
+            startNewSet();
         }
         initScore();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder resultat = new StringBuilder();
-        addPreviousSetsResults(resultat);
-        if (!scoreInCurrentGame.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase("love")
-                && scoreInCurrentGame.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(scoreInCurrentGame.getScoreInTheCurrentGamePlayer2())) {
-            resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer1() + "A");
-            return resultat.toString();
-        }
-        if (scoreInCurrentGame.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase("advantage in")) {
-            resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer1());
-            return resultat.toString();
-        } else if (scoreInCurrentGame.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase("advantage out")) {
-            resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer2());
-            return resultat.toString();
-        }
-        if (finishedSets.stream().filter(x -> x.getGameInSetPlayer2() - x.getGamePlayer1() >= 1 && x.getGameInSetPlayer2() >= 6).count() == 3) {
-            return resultat.append("player 2 won").toString();
-        } else if (finishedSets.stream().filter(x -> x.getGamePlayer1() - x.getGameInSetPlayer2() >= 1 && x.getGamePlayer1() >= 6).count() == 3) {
-            return resultat.append("player 1 won").toString();
-        }
-        return resultat.append(gamesInCurrentSetPlayer1 + "|" + gamesInCurrentSetPlayer2 + " " + scoreInCurrentGame.getScoreInTheCurrentGamePlayer1() + ":" + scoreInCurrentGame.getScoreInTheCurrentGamePlayer2()).toString();
+    private boolean hasPlayer1WonTheSet() {
+        return getGamesInCurrentSetPlayer1() >= 6 && getGamesInCurrentSetPlayer1() - getGamesInCurrentSetPlayer2() >= 2||(getGamesInCurrentSetPlayer1() > 6);
     }
 
-    private void addPreviousSetsResults(StringBuilder resultat) {
-        for (FinishedSet finishedSet : finishedSets) {
-            resultat.append(finishedSet.getGamePlayer1() + "|" + finishedSet.getGameInSetPlayer2() + " ");
-        }
+    //TODO a ameliorer. j'aime pas passer la référence
+    @Override
+    public String toString() {
+        return scoreFormater.toString(this);
     }
+
+
 }
