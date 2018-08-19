@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * ici on a la logique du calcul du score dans un jeu
  */
-public class ScoreInNormalGame {
+public class StandardGameService {
     private GameService gameService=new GameService();
     public static final String LOVE = "love";
     public static final String FOURTY = "40";

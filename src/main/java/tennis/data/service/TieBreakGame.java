@@ -2,12 +2,12 @@ package tennis.data.service;
 
 import tennis.Score;
 
-public class ScoreInTieBreakGame {
+public class TieBreakGame {
 
     private GameService gameService = new GameService();
 
     void computeScoreInTieBreakGameWhenPlayer1WonThePlay(Score score) {
-        if (score.getScoreInTheCurrentGamePlayer1().equals(ScoreInNormalGame.LOVE)) {
+        if (score.getScoreInTheCurrentGamePlayer1().equals(StandardGameService.LOVE)) {
             score.setScoreInTheCurrentGamePlayer1("1");
         } else {
             //TODO améliorer cett conversion
@@ -29,7 +29,7 @@ public class ScoreInTieBreakGame {
     }
 
     void computeScoreInTieBreakGameWhenPlayer2WonThePlay(Score score) {
-        if (score.getScoreInTheCurrentGamePlayer2().equals(ScoreInNormalGame.LOVE)) {
+        if (score.getScoreInTheCurrentGamePlayer2().equals(StandardGameService.LOVE)) {
             score.setScoreInTheCurrentGamePlayer2("1");
         } else {
             if (Integer.valueOf(score.getScoreInTheCurrentGamePlayer2()) >= 6) {

@@ -7,8 +7,8 @@ import java.util.List;
 public class ComputeTennisScore {
 
 
-    private final ScoreInTieBreakGame scoreInTieBreakGame = new ScoreInTieBreakGame();
-    final ScoreInNormalGame scoreInNormalGame = new ScoreInNormalGame();
+    private final TieBreakGame tieBreakGame = new TieBreakGame();
+    final StandardGameService standardGameService = new StandardGameService();
 
 
     public String computeScore(List<Boolean> plays) {
@@ -36,18 +36,18 @@ public class ComputeTennisScore {
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
         if (isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
-            scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
+            tieBreakGame.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
         } else {
-            scoreInNormalGame.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
+            standardGameService.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
 
         }
     }
 
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {
         if (isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
-            scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer1WonThePlay(score);
+            tieBreakGame.computeScoreInTieBreakGameWhenPlayer1WonThePlay(score);
         } else {
-            scoreInNormalGame.computeScoreInNormalGameWhenPlayer1WonTheGame(score);
+            standardGameService.computeScoreInNormalGameWhenPlayer1WonTheGame(score);
         }
     }
 

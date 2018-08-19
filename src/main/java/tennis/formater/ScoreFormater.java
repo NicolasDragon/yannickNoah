@@ -2,7 +2,7 @@ package tennis.formater;
 
 import tennis.Score;
 import tennis.Set;
-import tennis.data.service.ScoreInNormalGame;
+import tennis.data.service.StandardGameService;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -21,7 +21,7 @@ public class ScoreFormater {
     public String toString(Score score) {
         StringBuilder resultat = new StringBuilder();
         addPreviousSetsResults(resultat, score.getFinishedSets());
-        if (!score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ScoreInNormalGame.LOVE)
+        if (!score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(StandardGameService.LOVE)
                 && score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(score.getScoreInTheCurrentGamePlayer2())) {
             resultat.append(score.getGamesInCurrentSetPlayer1())
                     .append(TILT)
@@ -29,13 +29,13 @@ public class ScoreFormater {
                     .append(SPACE)
                     .append(score.getScoreInTheCurrentGamePlayer1())
                     .append(A_EQUALITY);
-        } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ScoreInNormalGame.ADVANTAGE_IN)) {
+        } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(StandardGameService.ADVANTAGE_IN)) {
             resultat.append(score.getGamesInCurrentSetPlayer1())
                     .append(TILT)
                     .append(score.getGamesInCurrentSetPlayer2())
                     .append(SPACE)
                     .append(score.getScoreInTheCurrentGamePlayer1());
-        } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(ScoreInNormalGame.ADVANTAGE_OUT)) {
+        } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(StandardGameService.ADVANTAGE_OUT)) {
             resultat.append(score.getGamesInCurrentSetPlayer1())
                     .append(TILT)
                     .append(score.getGamesInCurrentSetPlayer2())

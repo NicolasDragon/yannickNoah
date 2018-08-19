@@ -31,8 +31,8 @@ public class GameService {
     }
 
     public void initScore(Score score) {
-        score.getCurrentGame().setScoreInTheCurrentGamePlayer1(ScoreInNormalGame.LOVE);
-        score.getCurrentGame().setScoreInTheCurrentGamePlayer2(ScoreInNormalGame.LOVE);
+        score.getCurrentGame().setScoreInTheCurrentGamePlayer1(StandardGameService.LOVE);
+        score.getCurrentGame().setScoreInTheCurrentGamePlayer2(StandardGameService.LOVE);
 
     }
 

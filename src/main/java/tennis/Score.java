@@ -1,7 +1,6 @@
 package tennis;
 
 import tennis.data.service.GameService;
-import tennis.data.service.ScoreInNormalGame;
 import tennis.formater.ScoreFormater;
 
 import java.util.ArrayList;
