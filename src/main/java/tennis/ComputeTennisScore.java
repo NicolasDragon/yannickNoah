@@ -2,7 +2,7 @@ package tennis;
 
 import java.util.List;
 
-public class YannickNoah {
+public class ComputeTennisScore {
 
 
     private final ScoreInTieBreakGame scoreInTieBreakGame = new ScoreInTieBreakGame();
@@ -10,22 +10,25 @@ public class YannickNoah {
 
 
     public String computeScore(List<Boolean> plays) {
-        return compteScoreRecursive(plays, new Score());
+        return computeScoreRecursive(plays, new Score());
     }
 
 
-    private String compteScoreRecursive(List<Boolean> plays, Score score) {
+    private String computeScoreRecursive(List<Boolean> plays, Score score) {
         if (plays.size() == 0) {
             return score.toString();
         }
-        //joueur 1 a gagné
-        if (plays.get(0)) {
+        computeNewScoreAfterThisPlay(score, plays.get(0));
+        plays.remove(0);
+        return computeScoreRecursive(plays, score);
+    }
+
+    private void computeNewScoreAfterThisPlay(Score score, Boolean play) {
+        if (play) {
             computeScoreWhenFirstPlayerWonTheBall(score);
         } else {
             compteScoreWhenSecondPlayerWonTheBall(score);
         }
-        plays.remove(0);
-        return compteScoreRecursive(plays, score);
     }
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
@@ -42,14 +45,10 @@ public class YannickNoah {
             scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer1WonThePlay(score);
         } else {
             scoreInNormalGame.computeScoreInNormalGameWhenPlayer1WonTheGame(score);
-
-
         }
     }
 
     private boolean isTieBreak(Score score) {
         return score.getGamesInCurrentSetPlayer1() == 6 && score.getGamesInCurrentSetPlayer2() == 6;
     }
-
-
 }

@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import tennis.YannickNoah;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,15 +18,15 @@ import java.util.stream.Stream;
 import static java.lang.Boolean.*;
 
 @RunWith(DataProviderRunner.class)
-public class YannickNoahTest {
+public class ComputeTennisScoreTest {
 
 
     public static final Boolean[] FIRST_PLAYER_GAME = {TRUE, TRUE, TRUE, TRUE};
-    private YannickNoah yannickNoah;
+    private ComputeTennisScore computeTennisScore;
 
     @Before
     public void setUp() {
-        yannickNoah = new YannickNoah();
+        computeTennisScore = new ComputeTennisScore();
     }
 
 
@@ -37,7 +36,7 @@ public class YannickNoahTest {
                                 String expectedScore,
                                 String scenarioName) {
         //WHEN
-        String result = yannickNoah.computeScore(new ArrayList<>(plays));
+        String result = computeTennisScore.computeScore(new ArrayList<>(plays));
 
         //THEN
         Assert.assertEquals(scenarioName, expectedScore, result);

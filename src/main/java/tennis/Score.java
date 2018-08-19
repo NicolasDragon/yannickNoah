@@ -3,22 +3,30 @@ package tennis;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * score object
+ */
 public class Score {
 
-    private final ScoreInGame scoreInCurrentGame = new ScoreInGame();
+    //current game
+    private ScoreInGame scoreInCurrentGame = new ScoreInGame();
+    ;
+    //formatter to print our score
     private final ScoreFormater scoreFormater = new ScoreFormater();
 
-    public List<FinishedSet> getFinishedSets() {
-        return finishedSets;
+    private Set currentSet = new Set();
+
+    private Set initSet() {
+        return new Set();
     }
 
-    private List<FinishedSet> finishedSets = new ArrayList();
-    private int gamesInCurrentSetPlayer2;
-    private int gamesInCurrentSetPlayer1;
+    //list of the finished set
+    private List<Set> finishedSets = new ArrayList();
 
 
     public Score() {
         initScore();
+
     }
 
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
@@ -31,27 +39,21 @@ public class Score {
 
 
     public int getGamesInCurrentSetPlayer1() {
-        return gamesInCurrentSetPlayer1;
+        return currentSet.getGamesWonByPlayer1();
     }
 
-    public void setGamesInCurrentSetPlayer1(int gamesInCurrentSetPlayer1) {
-        this.gamesInCurrentSetPlayer1 = gamesInCurrentSetPlayer1;
-    }
 
     public int getGamesInCurrentSetPlayer2() {
-        return gamesInCurrentSetPlayer2;
+        return currentSet.getGamesWonByPlayer2();
     }
-
-    public void setGamesInCurrentSetPlayer2(int gamesInCurrentSetPlayer2) {
-        this.gamesInCurrentSetPlayer2 = gamesInCurrentSetPlayer2;
-    }
-
 
     private void initScore() {
-        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer1("love");
-        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer2("love");
+        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer1(ScoreInNormalGame.LOVE);
+        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer2(ScoreInNormalGame.LOVE);
+
     }
-// question ne parle pas aux classes que tu ne connais pas ?
+
+    // question ne parle pas aux classes que tu ne connais pas ?
     public String getScoreInTheCurrentGamePlayer1() {
         return scoreInCurrentGame.getScoreInTheCurrentGamePlayer1();
     }
@@ -61,21 +63,20 @@ public class Score {
     }
 
     public void player2wonTheGame() {
-        setGamesInCurrentSetPlayer2(getGamesInCurrentSetPlayer2() + 1);
+        currentSet.setGamesWonByPlayer2(currentSet.getGamesWonByPlayer2() + 1);
         if (hasPlayer2WonTheSet()) {
-            setCurrentSetFinished();
+            finishCurrentSet();
             startNewSet();
         }
         initScore();
     }
 
     private void startNewSet() {
-        setGamesInCurrentSetPlayer1(0);
-        setGamesInCurrentSetPlayer2(0);
+        currentSet = new Set();
     }
 
-    private void setCurrentSetFinished() {
-        getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
+    private void finishCurrentSet() {
+        getFinishedSets().add(currentSet);
     }
 
     private boolean hasPlayer2WonTheSet() {
@@ -83,30 +84,34 @@ public class Score {
     }
 
     private boolean hasPlayer2WonTheSetOnTieBreak() {
-        return getGamesInCurrentSetPlayer2() > 6;
+        return currentSet.getGamesWonByPlayer2() > 6;
     }
 
     private boolean hasPlayer2EnoughGamesToWinTheSet() {
-        return getGamesInCurrentSetPlayer2() >= 6 && getGamesInCurrentSetPlayer2() - getGamesInCurrentSetPlayer1() >= 2;
+        return currentSet.getGamesWonByPlayer2() >= 6 && currentSet.getGamesWonByPlayer2() - currentSet.getGamesWonByPlayer1() >= 2;
     }
 
     public void player1wonTheGame() {
-        setGamesInCurrentSetPlayer1(getGamesInCurrentSetPlayer1() + 1);
+        currentSet.setGamesWonByPlayer1(currentSet.getGamesWonByPlayer1() + 1);
         if (hasPlayer1WonTheSet()) {
-            setCurrentSetFinished();
+            finishCurrentSet();
             startNewSet();
         }
         initScore();
     }
 
     private boolean hasPlayer1WonTheSet() {
-        return getGamesInCurrentSetPlayer1() >= 6 && getGamesInCurrentSetPlayer1() - getGamesInCurrentSetPlayer2() >= 2||(getGamesInCurrentSetPlayer1() > 6);
+        return currentSet.getGamesWonByPlayer1() >= 6 && currentSet.getGamesWonByPlayer1() - currentSet.getGamesWonByPlayer2() >= 2 || (currentSet.getGamesWonByPlayer1() > 6);
     }
 
     //TODO a ameliorer. j'aime pas passer la référence
     @Override
     public String toString() {
         return scoreFormater.toString(this);
+    }
+
+    public List<Set> getFinishedSets() {
+        return finishedSets;
     }
 
 

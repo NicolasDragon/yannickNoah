@@ -12,6 +12,7 @@ public class ScoreFormater {
     public static final String PLAYER_2_WON = "player 2 won";
     public static final String PLAYER_1_WON = "player 1 won";
     public static final int WON_SET_NUMBER_TO_WIN = 3;
+    public static final String A_EQUALITY = "A";
 
     public String toString(Score score) {
         StringBuilder resultat = new StringBuilder();
@@ -23,7 +24,7 @@ public class ScoreFormater {
                     .append(score.getGamesInCurrentSetPlayer2())
                     .append(SPACE)
                     .append(score.getScoreInTheCurrentGamePlayer1())
-                    .append("A");
+                    .append(A_EQUALITY);
         } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ScoreInNormalGame.ADVANTAGE_IN)) {
             resultat.append(score.getGamesInCurrentSetPlayer1())
                     .append(TILT)
@@ -51,7 +52,7 @@ public class ScoreFormater {
         }
         return resultat.toString();
     }
-
+//logique métier dans le formatter pas terrible... à voir comment gérer cela
     private boolean hasPlayer1WonTheGame(Score score) {
         return score.getFinishedSets().stream().filter(finishedSetWonByPlayer1()).count() == WON_SET_NUMBER_TO_WIN;
     }
@@ -60,18 +61,18 @@ public class ScoreFormater {
         return score.getFinishedSets().stream().filter(finishedSetWonByPlayer2()).count() == WON_SET_NUMBER_TO_WIN;
     }
 
-    private Predicate<FinishedSet> finishedSetWonByPlayer1() {
+    private Predicate<Set> finishedSetWonByPlayer1() {
         return x -> x.getGamesInFinishedSetPlayer1() - x.getGameInFinishedSetPlayer2() >= 1
                 && x.getGamesInFinishedSetPlayer1() >= 6;
     }
 
-    private Predicate<FinishedSet> finishedSetWonByPlayer2() {
+    private Predicate<Set> finishedSetWonByPlayer2() {
         return x -> x.getGameInFinishedSetPlayer2() - x.getGamesInFinishedSetPlayer1() >= 1
                 && x.getGameInFinishedSetPlayer2() >= 6;
     }
 
-    public void addPreviousSetsResults(StringBuilder resultat, List<FinishedSet> finishedSets) {
-        for (FinishedSet finishedSet : finishedSets) {
+    public void addPreviousSetsResults(StringBuilder resultat, List<Set> finishedSets) {
+        for (Set finishedSet : finishedSets) {
             resultat.append(finishedSet.getGamesInFinishedSetPlayer1() + TILT + finishedSet.getGameInFinishedSetPlayer2() + SPACE);
         }
     }
