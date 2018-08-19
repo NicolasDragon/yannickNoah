@@ -16,10 +16,6 @@ public class Score {
 
     private Set currentSet = new Set();
 
-    private Set initSet() {
-        return new Set();
-    }
-
     //list of the finished set
     private List<Set> finishedSets = new ArrayList();
 
@@ -101,7 +97,9 @@ public class Score {
     }
 
     private boolean hasPlayer1WonTheSet() {
-        return currentSet.getGamesWonByPlayer1() >= 6 && currentSet.getGamesWonByPlayer1() - currentSet.getGamesWonByPlayer2() >= 2 || (currentSet.getGamesWonByPlayer1() > 6);
+        return currentSet.getGamesWonByPlayer1() >= 6
+                && currentSet.getGamesWonByPlayer1() - currentSet.getGamesWonByPlayer2() >= 2
+                || (currentSet.getGamesWonByPlayer1() > 6);
     }
 
     //TODO a ameliorer. j'aime pas passer la référence
