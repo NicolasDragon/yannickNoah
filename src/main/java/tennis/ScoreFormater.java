@@ -1,6 +1,7 @@
 package tennis;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ScoreFormater {
 
@@ -8,6 +9,9 @@ public class ScoreFormater {
     public static final String SPACE = " ";
     public static final String COLON = ":";
     public static final String TILT = "|";
+    public static final String PLAYER_2_WON = "player 2 won";
+    public static final String PLAYER_1_WON = "player 1 won";
+    public static final int WON_SET_NUMBER_TO_WIN = 3;
 
     public String toString(Score score) {
         StringBuilder resultat = new StringBuilder();
@@ -20,33 +24,55 @@ public class ScoreFormater {
                     .append(SPACE)
                     .append(score.getScoreInTheCurrentGamePlayer1())
                     .append("A");
-            return resultat.toString();
+        } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ScoreInNormalGame.ADVANTAGE_IN)) {
+            resultat.append(score.getGamesInCurrentSetPlayer1())
+                    .append(TILT)
+                    .append(score.getGamesInCurrentSetPlayer2())
+                    .append(SPACE)
+                    .append(score.getScoreInTheCurrentGamePlayer1());
+        } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(ScoreInNormalGame.ADVANTAGE_OUT)) {
+            resultat.append(score.getGamesInCurrentSetPlayer1())
+                    .append(TILT)
+                    .append(score.getGamesInCurrentSetPlayer2())
+                    .append(SPACE)
+                    .append(score.getScoreInTheCurrentGamePlayer2());
+        } else if (hasPlayer2WonTheMatch(score)) {
+            resultat.append(PLAYER_2_WON);
+        } else if (hasPlayer1WonTheGame(score)) {
+            resultat.append(PLAYER_1_WON);
+        } else {
+            resultat.append(score.getGamesInCurrentSetPlayer1())
+                    .append(TILT)
+                    .append(score.getGamesInCurrentSetPlayer2())
+                    .append(SPACE)
+                    .append(score.getScoreInTheCurrentGamePlayer1())
+                    .append(COLON)
+                    .append(score.getScoreInTheCurrentGamePlayer2());
         }
-        if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase("advantage in")) {
-            resultat.append(score.getGamesInCurrentSetPlayer1()).append("|").append(score.getGamesInCurrentSetPlayer2()).append(" ").append(score.getScoreInTheCurrentGamePlayer1());
-            return resultat.toString();
-        } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase("advantage out")) {
-            resultat.append(score.getGamesInCurrentSetPlayer1()).append("|").append(score.getGamesInCurrentSetPlayer2()).append(" ").append(score.getScoreInTheCurrentGamePlayer2());
-            return resultat.toString();
-        }
-        if (score.getFinishedSets().stream().filter(x -> x.getGameInSetPlayer2() - x.getGamePlayer1() >= 1 && x.getGameInSetPlayer2() >= 6).count() == 3) {
-            return resultat.append("player 2 won").toString();
-        } else if (score.getFinishedSets().stream().filter(x -> x.getGamePlayer1() - x.getGameInSetPlayer2() >= 1 && x.getGamePlayer1() >= 6).count() == 3) {
-            return resultat.append("player 1 won").toString();
-        }
-        return resultat.append(score.getGamesInCurrentSetPlayer1())
-                .append(TILT)
-                .append(score.getGamesInCurrentSetPlayer2())
-                .append(SPACE)
-                .append(score.getScoreInTheCurrentGamePlayer1())
-                .append(COLON)
-                .append(score.getScoreInTheCurrentGamePlayer2())
-                .toString();
+        return resultat.toString();
+    }
+
+    private boolean hasPlayer1WonTheGame(Score score) {
+        return score.getFinishedSets().stream().filter(finishedSetWonByPlayer1()).count() == WON_SET_NUMBER_TO_WIN;
+    }
+
+    private boolean hasPlayer2WonTheMatch(Score score) {
+        return score.getFinishedSets().stream().filter(finishedSetWonByPlayer2()).count() == WON_SET_NUMBER_TO_WIN;
+    }
+
+    private Predicate<FinishedSet> finishedSetWonByPlayer1() {
+        return x -> x.getGamesInFinishedSetPlayer1() - x.getGameInFinishedSetPlayer2() >= 1
+                && x.getGamesInFinishedSetPlayer1() >= 6;
+    }
+
+    private Predicate<FinishedSet> finishedSetWonByPlayer2() {
+        return x -> x.getGameInFinishedSetPlayer2() - x.getGamesInFinishedSetPlayer1() >= 1
+                && x.getGameInFinishedSetPlayer2() >= 6;
     }
 
     public void addPreviousSetsResults(StringBuilder resultat, List<FinishedSet> finishedSets) {
         for (FinishedSet finishedSet : finishedSets) {
-            resultat.append(finishedSet.getGamePlayer1() + "|" + finishedSet.getGameInSetPlayer2() + " ");
+            resultat.append(finishedSet.getGamesInFinishedSetPlayer1() + TILT + finishedSet.getGameInFinishedSetPlayer2() + SPACE);
         }
     }
 }

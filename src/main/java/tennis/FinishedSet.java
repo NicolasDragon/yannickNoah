@@ -3,7 +3,7 @@ package tennis;
 public class FinishedSet {
     private int gamePlayer2;
     private int gamePlayer1;
-    public int getGameInSetPlayer2() {
+    public int getGameInFinishedSetPlayer2() {
         return gamePlayer2;
     }
 
@@ -16,7 +16,7 @@ public class FinishedSet {
         this.gamePlayer1 = gamePlayer1;
     }
 
-    public int getGamePlayer1() {
+    public int getGamesInFinishedSetPlayer1() {
         return gamePlayer1;
     }
 
