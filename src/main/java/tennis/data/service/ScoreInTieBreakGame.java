@@ -1,4 +1,6 @@
-package tennis;
+package tennis.data.service;
+
+import tennis.Score;
 
 public class ScoreInTieBreakGame {
 
@@ -9,10 +11,16 @@ public class ScoreInTieBreakGame {
             if (Integer.valueOf(score.getScoreInTheCurrentGamePlayer1()) >= 6) {
                 score.player1wonTheGame();
             } else {
-                score.setScoreInTheCurrentGamePlayer1(String.valueOf(Integer.valueOf(score.getScoreInTheCurrentGamePlayer1()) + 1));
+                increasePlayer1Score(score);
 
             }
         }
+    }
+
+    private void increasePlayer1Score(Score score) {
+        Integer player1CurrentScore = Integer.valueOf(score.getScoreInTheCurrentGamePlayer1());
+        int increasedPlayer1CurrentScore = player1CurrentScore + 1;
+        score.setScoreInTheCurrentGamePlayer1(String.valueOf(increasedPlayer1CurrentScore));
     }
 
     void computeScoreInTieBreakGameWhenPlayer2WonThePlay(Score score) {

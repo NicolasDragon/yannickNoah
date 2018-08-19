@@ -1,4 +1,4 @@
-package tennis;
+package tennis.data.service;
 
 import tennis.Score;
 

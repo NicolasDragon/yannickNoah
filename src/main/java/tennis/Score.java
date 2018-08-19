@@ -1,4 +1,7 @@
-package tennis;
+    package tennis;
+
+import tennis.data.service.ScoreInNormalGame;
+import tennis.formater.ScoreFormater;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
 public class Score {
 
     //current game
-    private ScoreInGame scoreInCurrentGame = new ScoreInGame();
+    private Game currentGame = new Game();
     ;
     //formatter to print our score
     private final ScoreFormater scoreFormater = new ScoreFormater();
@@ -26,11 +29,11 @@ public class Score {
     }
 
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
-        scoreInCurrentGame.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
+        currentGame.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
     }
 
     public void setScoreInTheCurrentGamePlayer2(String scoreInTheCurrentGamePlayer2) {
-        scoreInCurrentGame.setScoreInTheCurrentGamePlayer2(scoreInTheCurrentGamePlayer2);
+        currentGame.setScoreInTheCurrentGamePlayer2(scoreInTheCurrentGamePlayer2);
     }
 
 
@@ -44,18 +47,18 @@ public class Score {
     }
 
     private void initScore() {
-        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer1(ScoreInNormalGame.LOVE);
-        this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer2(ScoreInNormalGame.LOVE);
+        this.currentGame.setScoreInTheCurrentGamePlayer1(ScoreInNormalGame.LOVE);
+        this.currentGame.setScoreInTheCurrentGamePlayer2(ScoreInNormalGame.LOVE);
 
     }
 
     // question ne parle pas aux classes que tu ne connais pas ?
     public String getScoreInTheCurrentGamePlayer1() {
-        return scoreInCurrentGame.getScoreInTheCurrentGamePlayer1();
+        return currentGame.getScoreInTheCurrentGamePlayer1();
     }
 
     public String getScoreInTheCurrentGamePlayer2() {
-        return scoreInCurrentGame.getScoreInTheCurrentGamePlayer2();
+        return currentGame.getScoreInTheCurrentGamePlayer2();
     }
 
     public void player2wonTheGame() {

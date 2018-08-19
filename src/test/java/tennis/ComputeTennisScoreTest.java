@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import tennis.data.service.ComputeTennisScore;
 
 import java.util.ArrayList;
 import java.util.Arrays;

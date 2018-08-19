@@ -1,11 +1,11 @@
 package tennis;
 
-public class ScoreInGame {
+public class Game {
 
     private String scoreInTheCurrentGamePlayer1;
     private String scoreInTheCurrentGamePlayer2;
 
-    public ScoreInGame() {
+    public Game() {
     }
 
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {

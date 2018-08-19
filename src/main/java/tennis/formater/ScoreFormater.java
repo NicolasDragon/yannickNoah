@@ -1,4 +1,8 @@
-package tennis;
+package tennis.formater;
+
+import tennis.Score;
+import tennis.Set;
+import tennis.data.service.ScoreInNormalGame;
 
 import java.util.List;
 import java.util.function.Predicate;

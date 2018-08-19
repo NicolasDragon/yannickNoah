@@ -1,4 +1,8 @@
-package tennis;
+package tennis.data.service;
+
+import tennis.Score;
+import tennis.data.service.ScoreInNormalGame;
+import tennis.data.service.ScoreInTieBreakGame;
 
 import java.util.List;
 
@@ -23,6 +27,7 @@ public class ComputeTennisScore {
         return computeScoreRecursive(plays, score);
     }
 
+    //q travail sur l'objet direct ? ou bien copie puis retour ?
     private void computeNewScoreAfterThisPlay(Score score, Boolean play) {
         if (play) {
             computeScoreWhenFirstPlayerWonTheBall(score);
@@ -34,8 +39,8 @@ public class ComputeTennisScore {
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
         if (isTieBreak(score)) {
             scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
-        }else{
-        scoreInNormalGame.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
+        } else {
+            scoreInNormalGame.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
 
         }
     }
