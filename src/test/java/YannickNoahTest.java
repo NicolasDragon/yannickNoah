@@ -72,12 +72,12 @@ public class YannickNoahTest {
                 {createPlays(FALSE, 72), "0|6 0|6 0|6 player 2 won", "2 games to zero"},
                 {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE), "0|1 love:love", "second player has advantage"},
                 {Arrays.asList(TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE), "1|0 love:love", "second player has advantage"},
-                {createTieBreak(), "7|6 0|0 love:love", "first player won the first set"},
-//                {createTieBreak(), "6|6  1:love", "first player won the first set"},
+                {createTieBreakFirstPlayer(), "7|6 0|0 love:love", "first player won the first set on tie break"},
+                {createTieBreakSecondPlayer(), "6|7 0|0 love:love", "second  player won the first set on tie break"},
         };
     }
 
-    public static List createTieBreak() {
+    public static List createTieBreakFirstPlayer() {
         // 5-0
         List<Boolean> plays = createPlays(TRUE, 20);
         // 5-5
@@ -90,6 +90,25 @@ public class YannickNoahTest {
         //facon différente de compter le score ici!
         //premier à 7 avec 2 points d'écart
         plays.addAll(createPlays(TRUE, 7));
+//        plays.addAll(createPlays(TRUE, 4));
+        return plays;
+    }
+
+
+
+    public static List createTieBreakSecondPlayer() {
+        // 0-5
+        List<Boolean> plays = createPlays(FALSE, 20);
+        // 5-5
+        plays.addAll(createPlays(TRUE, 20));
+        //5-6
+        plays.addAll(createPlays(FALSE, 4));
+        //6-6
+        plays.addAll(createPlays(TRUE, 4));
+        //6-7
+        //facon différente de compter le score ici!
+        //premier à 7 avec 2 points d'écart
+        plays.addAll(createPlays(FALSE, 7));
 //        plays.addAll(createPlays(TRUE, 4));
         return plays;
     }

@@ -30,7 +30,12 @@ public class YannickNoah {
     }
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
+        if (isTieBreak(score)) {
+            scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
+        }else{
         scoreInNormalGame.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
+
+        }
     }
 
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {

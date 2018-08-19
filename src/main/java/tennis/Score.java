@@ -50,7 +50,7 @@ public class Score {
         this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer1("love");
         this.scoreInCurrentGame.setScoreInTheCurrentGamePlayer2("love");
     }
-
+// question ne parle pas aux classes que tu ne connais pas ?
     public String getScoreInTheCurrentGamePlayer1() {
         return scoreInCurrentGame.getScoreInTheCurrentGamePlayer1();
     }
@@ -61,7 +61,7 @@ public class Score {
 
     public void player2wonTheGame() {
         setGamesInCurrentSetPlayer2(getGamesInCurrentSetPlayer2() + 1);
-        if (getGamesInCurrentSetPlayer2() >= 6 && getGamesInCurrentSetPlayer2() - getGamesInCurrentSetPlayer1() >= 2) {
+        if (getGamesInCurrentSetPlayer2() >= 6 && getGamesInCurrentSetPlayer2() - getGamesInCurrentSetPlayer1() >= 2||(getGamesInCurrentSetPlayer2() > 6)) {
             getFinishedSets().add(new FinishedSet(getGamesInCurrentSetPlayer2(), getGamesInCurrentSetPlayer1()));
             setGamesInCurrentSetPlayer1(0);
             setGamesInCurrentSetPlayer2(0);
