@@ -1,5 +1,6 @@
-    package tennis;
+package tennis;
 
+import tennis.data.service.GameService;
 import tennis.data.service.ScoreInNormalGame;
 import tennis.formater.ScoreFormater;
 
@@ -10,12 +11,16 @@ import java.util.List;
  * score object
  */
 public class Score {
-
+    //pas terrible
+    private GameService gameService = new GameService();
     //current game
     private Game currentGame = new Game();
-    ;
     //formatter to print our score
     private final ScoreFormater scoreFormater = new ScoreFormater();
+
+    public Set getCurrentSet() {
+        return currentSet;
+    }
 
     private Set currentSet = new Set();
 
@@ -24,8 +29,11 @@ public class Score {
 
 
     public Score() {
-        initScore();
+        gameService.initScore(this);
+    }
 
+    public Game getCurrentGame() {
+        return currentGame;
     }
 
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
@@ -46,12 +54,6 @@ public class Score {
         return currentSet.getGamesWonByPlayer2();
     }
 
-    private void initScore() {
-        this.currentGame.setScoreInTheCurrentGamePlayer1(ScoreInNormalGame.LOVE);
-        this.currentGame.setScoreInTheCurrentGamePlayer2(ScoreInNormalGame.LOVE);
-
-    }
-
     // question ne parle pas aux classes que tu ne connais pas ?
     public String getScoreInTheCurrentGamePlayer1() {
         return currentGame.getScoreInTheCurrentGamePlayer1();
@@ -61,49 +63,6 @@ public class Score {
         return currentGame.getScoreInTheCurrentGamePlayer2();
     }
 
-    public void player2wonTheGame() {
-        currentSet.setGamesWonByPlayer2(currentSet.getGamesWonByPlayer2() + 1);
-        if (hasPlayer2WonTheSet()) {
-            finishCurrentSet();
-            startNewSet();
-        }
-        initScore();
-    }
-
-    private void startNewSet() {
-        currentSet = new Set();
-    }
-
-    private void finishCurrentSet() {
-        getFinishedSets().add(currentSet);
-    }
-
-    private boolean hasPlayer2WonTheSet() {
-        return hasPlayer2EnoughGamesToWinTheSet() || hasPlayer2WonTheSetOnTieBreak();
-    }
-
-    private boolean hasPlayer2WonTheSetOnTieBreak() {
-        return currentSet.getGamesWonByPlayer2() > 6;
-    }
-
-    private boolean hasPlayer2EnoughGamesToWinTheSet() {
-        return currentSet.getGamesWonByPlayer2() >= 6 && currentSet.getGamesWonByPlayer2() - currentSet.getGamesWonByPlayer1() >= 2;
-    }
-
-    public void player1wonTheGame() {
-        currentSet.setGamesWonByPlayer1(currentSet.getGamesWonByPlayer1() + 1);
-        if (hasPlayer1WonTheSet()) {
-            finishCurrentSet();
-            startNewSet();
-        }
-        initScore();
-    }
-
-    private boolean hasPlayer1WonTheSet() {
-        return currentSet.getGamesWonByPlayer1() >= 6
-                && currentSet.getGamesWonByPlayer1() - currentSet.getGamesWonByPlayer2() >= 2
-                || (currentSet.getGamesWonByPlayer1() > 6);
-    }
 
     //TODO a ameliorer. j'aime pas passer la référence
     @Override
@@ -116,4 +75,7 @@ public class Score {
     }
 
 
+    public void setCurrentSet(Set currentSet) {
+        this.currentSet = currentSet;
+    }
 }

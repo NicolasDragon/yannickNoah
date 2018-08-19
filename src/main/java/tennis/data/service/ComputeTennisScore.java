@@ -1,8 +1,6 @@
 package tennis.data.service;
 
 import tennis.Score;
-import tennis.data.service.ScoreInNormalGame;
-import tennis.data.service.ScoreInTieBreakGame;
 
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class ComputeTennisScore {
     }
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
-        if (isTieBreak(score)) {
+        if (isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
             scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
         } else {
             scoreInNormalGame.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
@@ -46,14 +44,14 @@ public class ComputeTennisScore {
     }
 
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {
-        if (isTieBreak(score)) {
+        if (isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
             scoreInTieBreakGame.computeScoreInTieBreakGameWhenPlayer1WonThePlay(score);
         } else {
             scoreInNormalGame.computeScoreInNormalGameWhenPlayer1WonTheGame(score);
         }
     }
 
-    private boolean isTieBreak(Score score) {
-        return score.getGamesInCurrentSetPlayer1() == 6 && score.getGamesInCurrentSetPlayer2() == 6;
+    private boolean isTieBreak(int gamesInCurrentSetPlayer1, int gamesInCurrentSetPlayer2) {
+        return gamesInCurrentSetPlayer1 == 6 && gamesInCurrentSetPlayer2 == 6;
     }
 }

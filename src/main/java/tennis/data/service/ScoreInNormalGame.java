@@ -5,7 +5,11 @@ import tennis.Score;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * ici on a la logique du calcul du score dans un jeu
+ */
 public class ScoreInNormalGame {
+    private GameService gameService=new GameService();
     public static final String LOVE = "love";
     public static final String FOURTY = "40";
     public static final String ADVANTAGE_IN = "advantage in";
@@ -17,17 +21,16 @@ public class ScoreInNormalGame {
     void computeScoreInNormalGameWhenPlayer1WonTheGame(Score score) {
         // cas advantage
         if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(ADVANTAGE_IN)) {
-            score.player1wonTheGame();
+            gameService.player1wonTheGame(score);
             //cas gain de l'avantage
         } else if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
             if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
                 score.setScoreInTheCurrentGamePlayer1(ADVANTAGE_IN);
             } else {
-                //win of the set !
-                score.player1wonTheGame();
+                gameService.player1wonTheGame(score);
             }
         } else {
-            //autre cas
+            //default case where we take the next index
             String scoreInTheCurrentGamePlayer1 = getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer1());
             score.setScoreInTheCurrentGamePlayer1(scoreInTheCurrentGamePlayer1);
 
@@ -36,16 +39,18 @@ public class ScoreInNormalGame {
 
     void computeScoreInNormalGameWhenPlayer2WonTheGame(Score score) {
         if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(ADVANTAGE_OUT)) {
-            score.player2wonTheGame();
+//            score.player2wonTheGame();
+            gameService.player2wonTheGame(score);
             //cas du 40A
         } else if (score.getScoreInTheCurrentGamePlayer2().equalsIgnoreCase(FOURTY)) {
             if (score.getScoreInTheCurrentGamePlayer1().equalsIgnoreCase(FOURTY)) {
                 score.setScoreInTheCurrentGamePlayer2(ADVANTAGE_OUT);
             } else {
-                score.player2wonTheGame();
+//                score.player2wonTheGame();
+            gameService.player2wonTheGame(score);
             }
         } else {
-            String scoreInTheCurrentGamePlayer2 =getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer2());
+            String scoreInTheCurrentGamePlayer2 = getNewScoreAfterPlayWon(score.getScoreInTheCurrentGamePlayer2());
             score.setScoreInTheCurrentGamePlayer2(scoreInTheCurrentGamePlayer2);
 
         }
