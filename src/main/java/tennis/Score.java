@@ -10,29 +10,24 @@ import java.util.List;
  * score object
  */
 public class Score {
-    //pas terrible
-    private GameService gameService = new GameService();
-    //current game
+      //current game
     private Game currentGame = new Game();
     //formatter to print our score
     private final ScoreFormater scoreFormater = new ScoreFormater();
 
-    public Set getCurrentSet() {
-        return currentSet;
-    }
 
     private Set currentSet = new Set();
 
     //list of the finished set
-    private List<Set> finishedSets = new ArrayList();
+    private List<Set> finishedSets = new ArrayList<>();
 
-
-    public Score() {
-        gameService.initScore(this);
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
     }
 
-    public Game getCurrentGame() {
-        return currentGame;
+
+    public Set getCurrentSet() {
+        return currentSet;
     }
 
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
@@ -53,7 +48,6 @@ public class Score {
         return currentSet.getGamesWonByPlayer2();
     }
 
-    // question ne parle pas aux classes que tu ne connais pas ?
     public String getScoreInTheCurrentGamePlayer1() {
         return currentGame.getScoreInTheCurrentGamePlayer1();
     }
@@ -63,7 +57,6 @@ public class Score {
     }
 
 
-    //TODO a ameliorer. j'aime pas passer la référence
     @Override
     public String toString() {
         return scoreFormater.toString(this);

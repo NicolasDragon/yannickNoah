@@ -2,11 +2,8 @@ package tennis;
 
 public class Game {
 
-    private String scoreInTheCurrentGamePlayer1;
-    private String scoreInTheCurrentGamePlayer2;
-
-    public Game() {
-    }
+    private String scoreInTheCurrentGamePlayer1 = "love";
+    private String scoreInTheCurrentGamePlayer2 = "love";
 
     public void setScoreInTheCurrentGamePlayer1(String scoreInTheCurrentGamePlayer1) {
         this.scoreInTheCurrentGamePlayer1 = scoreInTheCurrentGamePlayer1;

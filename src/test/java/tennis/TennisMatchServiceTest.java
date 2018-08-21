@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import tennis.data.service.ComputeTennisScore;
+import tennis.data.service.TennisMatchService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,15 +19,15 @@ import java.util.stream.Stream;
 import static java.lang.Boolean.*;
 
 @RunWith(DataProviderRunner.class)
-public class ComputeTennisScoreTest {
+public class TennisMatchServiceTest {
 
 
     public static final Boolean[] FIRST_PLAYER_GAME = {TRUE, TRUE, TRUE, TRUE};
-    private ComputeTennisScore computeTennisScore;
+    private TennisMatchService tennisMatchService;
 
     @Before
     public void setUp() {
-        computeTennisScore = new ComputeTennisScore();
+        tennisMatchService = new TennisMatchService();
     }
 
 
@@ -37,7 +37,7 @@ public class ComputeTennisScoreTest {
                                 String expectedScore,
                                 String scenarioName) {
         //WHEN
-        String result = computeTennisScore.computeScore(new ArrayList<>(plays));
+        String result = tennisMatchService.computeScore(new ArrayList<>(plays));
 
         //THEN
         Assert.assertEquals(scenarioName, expectedScore, result);

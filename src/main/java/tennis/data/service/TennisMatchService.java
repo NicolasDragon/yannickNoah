@@ -1,13 +1,15 @@
 package tennis.data.service;
 
 import tennis.Score;
+import tennis.Set;
 
 import java.util.List;
+import java.util.function.Predicate;
 
-public class ComputeTennisScore {
+public class TennisMatchService {
 
-
-    private final TieBreakGame tieBreakGame = new TieBreakGame();
+    public static final int WON_SET_NUMBER_TO_WIN = 3;
+    private final TieBreakGameService tieBreakGameService = new TieBreakGameService();
     final StandardGameService standardGameService = new StandardGameService();
 
 
@@ -35,8 +37,8 @@ public class ComputeTennisScore {
     }
 
     private void compteScoreWhenSecondPlayerWonTheBall(Score score) {
-        if (isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
-            tieBreakGame.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
+        if (tieBreakGameService.isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
+            tieBreakGameService.computeScoreInTieBreakGameWhenPlayer2WonThePlay(score);
         } else {
             standardGameService.computeScoreInNormalGameWhenPlayer2WonTheGame(score);
 
@@ -44,14 +46,21 @@ public class ComputeTennisScore {
     }
 
     private void computeScoreWhenFirstPlayerWonTheBall(Score score) {
-        if (isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
-            tieBreakGame.computeScoreInTieBreakGameWhenPlayer1WonThePlay(score);
+        if (tieBreakGameService.isTieBreak(score.getGamesInCurrentSetPlayer1(), score.getGamesInCurrentSetPlayer2())) {
+            tieBreakGameService.computeScoreInTieBreakGameWhenPlayer1WonThePlay(score);
         } else {
             standardGameService.computeScoreInNormalGameWhenPlayer1WonTheGame(score);
         }
     }
 
-    private boolean isTieBreak(int gamesInCurrentSetPlayer1, int gamesInCurrentSetPlayer2) {
-        return gamesInCurrentSetPlayer1 == 6 && gamesInCurrentSetPlayer2 == 6;
+    public boolean hasPlayer1WonTheMatch(List<Set> finishedSets) {
+        return finishedSets.stream().filter(x -> x.getGamesInFinishedSetPlayer1() - x.getGameInFinishedSetPlayer2() >= 1
+                && x.getGamesInFinishedSetPlayer1() >= 6).count() == WON_SET_NUMBER_TO_WIN;
     }
+
+    public boolean hasPlayer2WonTheMatch(List<Set> finishedSets) {
+        return finishedSets.stream().filter(x -> x.getGameInFinishedSetPlayer2() - x.getGamesInFinishedSetPlayer1() >= 1
+                && x.getGameInFinishedSetPlayer2() >= 6).count() == WON_SET_NUMBER_TO_WIN;
+    }
+
 }
